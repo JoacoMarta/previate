@@ -42,7 +42,7 @@ export const MODO_PREVIA: PreviaCard[] = [
   c('jugador', 'suave', '{a}, decí quién de la ronda se viste mejor. Esa persona reparte {2}.'),
   c('jugador', 'suave', '{a}, elegí a alguien que tome {2} con vos.'),
   c('jugador', 'suave', '{a}, contá tu peor resaca en 30 segundos o tomá {2}.'),
-  c('jugador', 'suave', '{a}, si sos el más chico de la ronda tomá {2}. Si no, repartilos.'),
+  c('jugador', 'suave', '{a}, si tenés menos años que el resto de la ronda, tomá {2}. Si no, repartilos.'),
   c('jugador', 'suave', '{a}, cambiá de lugar con {b}.'),
   c('jugador', 'suave', '{a}, tenés un comodín: la próxima vez que te toque tomar, se lo pasás a otro.'),
   c('duelo', 'suave', '{a} contra {b}: piedra, papel o tijera. El que pierde toma {2}.'),

@@ -3,8 +3,8 @@ import { Actions, TopBar } from '../components/Layout'
 import { Naipe } from '../components/Naipe'
 import { PassPhone } from '../components/PassPhone'
 import { PlayerPicker } from '../components/PlayerPicker'
-import { SuitIcon } from '../components/Suit'
-import { buildDeck, frenchGlyph, isRed, spanishSuit, valueIndex, valueName, type Card, type DeckKind } from '../lib/deck'
+import { MiniCard } from '../components/MiniCard'
+import { buildDeck, valueName, type Card, type DeckKind } from '../lib/deck'
 import { useStore } from '../lib/store'
 import { useWakeLock } from '../lib/wakeLock'
 import type { GameMeta } from './registry'
@@ -15,18 +15,6 @@ type Challenge = null | { stage: 'pick' } | { stage: 'result'; claimer: string; 
 // Filas de abajo (vale 1) hacia arriba (vale 5).
 const ROWS = [[0, 1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11], [12, 13], [14]]
 const rowOf = (i: number) => ROWS.findIndex((r) => r.includes(i))
-
-function MiniCard({ card, faceUp, current }: { card?: Card; faceUp: boolean; current?: boolean }) {
-  if (!card || !faceUp) return <div className={'mini-card' + (current ? ' current' : '')} aria-label="Carta boca abajo" />
-  const sp = spanishSuit(card)
-  const glyph = frenchGlyph(card)
-  return (
-    <div className={'mini-card up' + (isRed(card) ? ' red' : '') + (current ? ' current' : '')} aria-label={valueName(card.value, card.deck)}>
-      <span>{valueIndex(card.value, card.deck)}</span>
-      {sp ? <SuitIcon suit={sp} /> : <span style={{ fontSize: 18 }}>{glyph}</span>}
-    </div>
-  )
-}
 
 function deal(players: string[], kind: DeckKind) {
   const deck = buildDeck(kind)
@@ -199,9 +187,8 @@ export function Piramide({ game, deckKind }: { game: GameMeta; deckKind: DeckKin
       <div className="app-inner" style={style}>
         <TopBar title={game.name} close />
         <div className="pass">
-          <p className="to">Prueba de memoria</p>
           <p className="who">{name}</p>
-          <p className="note">Decí tus cartas en voz alta. Después mostralas: por cada una que erraste, tomá {drinks(1)}.</p>
+          <p className="note">Prueba de memoria. Decí tus cartas en voz alta. Después mostralas: por cada una que erraste, tomá {drinks(1)}.</p>
           {shownHand && (
             <div className="hand" style={{ marginTop: 10 }}>
               {g.hands[name].map((c) => <MiniCard key={c.id} card={c} faceUp />)}

@@ -1,24 +1,15 @@
 import { useState } from 'react'
 import { IconEye, IconTrash } from '../components/Icons'
 import { TopBar } from '../components/Layout'
-import { BOMBA_CATEGORIAS } from '../content/bomba'
 import { ruleKey, rulesFor } from '../content/cardRules'
+import { LIST_DEFAULTS } from '../content'
 import { IMPOSTOR_CATS } from '../content/impostor'
-import { MAS_PROBABLE } from '../content/masProbable'
 import { MODO_PREVIA } from '../content/modoPrevia'
-import { YO_NUNCA } from '../content/yoNunca'
-import { gameById } from '../games/registry'
+import { gameById, type EditList } from '../games/registry'
 import { DECK_LABEL, deckValues, valueName, type DeckKind } from '../lib/deck'
 import { useStore } from '../lib/store'
 import { LEVELS, type Level, type Phrase } from '../lib/types'
 import { NotFound } from './GameDetail'
-
-const DEFAULTS: Record<string, Phrase[]> = {
-  'yo-nunca': YO_NUNCA,
-  'mas-probable': MAS_PROBABLE,
-  'modo-previa': MODO_PREVIA,
-  bomba: BOMBA_CATEGORIAS,
-}
 
 export function Editor({ id }: { id: string }) {
   const game = gameById(id)
@@ -28,9 +19,7 @@ export function Editor({ id }: { id: string }) {
     <div className="app-inner" style={style}>
       <TopBar title={`${game.edit.label}: ${game.name}`} />
       <div className="page page-tight">
-        {game.edit.kind === 'list' && game.edit.listId && (
-          <ListEditor listId={game.edit.listId} defaults={DEFAULTS[game.edit.listId]} levels={!!game.levels} />
-        )}
+        {game.edit.kind === 'lists' && game.edit.lists && <ListsEditor lists={game.edit.lists} />}
         {game.edit.kind === 'previa' && (
           <>
             <p className="hint" style={{ margin: 0 }}>
@@ -44,6 +33,24 @@ export function Editor({ id }: { id: string }) {
         {game.edit.kind === 'rules' && game.decks && <RulesEditor gameId={game.id} decks={game.decks} />}
       </div>
     </div>
+  )
+}
+
+function ListsEditor({ lists }: { lists: EditList[] }) {
+  const [active, setActive] = useState(lists[0].id)
+  const current = lists.find((l) => l.id === active) ?? lists[0]
+  return (
+    <>
+      {lists.length > 1 && (
+        <div className="tabs" role="tablist">
+          {lists.map((l) => (
+            <button key={l.id} role="tab" className="chip" aria-selected={l.id === active} aria-pressed={l.id === active} onClick={() => setActive(l.id)}>{l.label}</button>
+          ))}
+        </div>
+      )}
+      {lists.length === 1 && current.label.includes('|') && <p className="hint" style={{ margin: 0 }}>{current.label}</p>}
+      <ListEditor key={current.id} listId={current.id} defaults={LIST_DEFAULTS[current.id] ?? []} levels={current.levels} />
+    </>
   )
 }
 

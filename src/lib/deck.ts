@@ -58,12 +58,6 @@ export function kingValue(kind: DeckKind) {
   return kind === 'francesa' ? 13 : 12
 }
 
-const GLYPH: Record<string, string> = { corazones: '♥︎', diamantes: '♦︎', treboles: '♣︎', picas: '♠︎' }
-
-/** Símbolo de texto para los palos franceses (los españoles usan dibujo). */
-export function frenchGlyph(card: Card): string | undefined {
-  return GLYPH[card.suit]
-}
 
 export function isRed(card: Card) {
   return card.suit === 'corazones' || card.suit === 'diamantes'

@@ -3,7 +3,8 @@ import { Actions, TopBar } from '../components/Layout'
 import { Naipe } from '../components/Naipe'
 import { PlayerPicker } from '../components/PlayerPicker'
 import { ruleKey, rulesFor, type CardRule } from '../content/cardRules'
-import { buildDeck, cardName, frenchGlyph, isRed, kingValue, valueIndex, type Card, type DeckKind } from '../lib/deck'
+import { buildDeck, cardName, isRed, kingValue, valueIndex, type Card, type DeckKind } from '../lib/deck'
+import { CardSuit } from '../components/CardSuit'
 import { fill, useStore } from '../lib/store'
 import { useWakeLock } from '../lib/wakeLock'
 import type { GameMeta, Suit } from './registry'
@@ -112,7 +113,7 @@ export function CardRuleGame({ game, deckKind }: { game: GameMeta; deckKind: Dec
               suit={SUIT_OF[card.suit]}
               index={valueIndex(card.value, deckKind)}
               dealKey={card.id}
-              glyph={frenchGlyph(card)}
+              cornerIcon={deckKind === 'francesa' ? <CardSuit card={card} /> : undefined}
               colorOverride={deckKind === 'francesa' ? (isRed(card) ? 'var(--copas)' : 'var(--ink)') : undefined}
             >
               <div className="big-value">{valueIndex(card.value, deckKind)}</div>

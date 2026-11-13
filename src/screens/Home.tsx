@@ -1,4 +1,4 @@
-import { IconChevron, IconGear } from '../components/Icons'
+import { IconChevron, IconSliders, IconWarn } from '../components/Icons'
 import { SuitIcon } from '../components/Suit'
 import { GAMES, SUIT_INFO, SUIT_ORDER } from '../games/registry'
 import { go } from '../lib/router'
@@ -8,15 +8,13 @@ export function Home() {
   const { players } = useStore()
   return (
     <div className="page">
-      <header>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <h1 className="brand">Previate</h1>
-          <button className="icon-btn" style={{ marginTop: 18 }} onClick={() => go('ajustes')} aria-label="Ajustes">
-            <IconGear />
-          </button>
-        </div>
-        <p className="brand-sub">Juegos de previa para un solo celular. Elegí uno y pasalo.</p>
+      <header className="home-head">
+        <h1 className="brand">Fondo<br />Blanco</h1>
+        <button className="icon-btn" onClick={() => go('ajustes')} aria-label="Ajustes">
+          <IconSliders />
+        </button>
       </header>
+      <p className="brand-sub">Juegos de previa para un solo celular. Elegí uno y pasalo.</p>
 
       <button className="players-strip" onClick={() => go('jugadores')}>
         <div className="names">
@@ -36,26 +34,32 @@ export function Home() {
       </button>
 
       {SUIT_ORDER.map((suit) => {
-        const games = GAMES.filter((g) => g.suit === suit).sort((a, b) => Number(b.playable) - Number(a.playable))
+        const games = GAMES.filter((g) => g.suit === suit)
         return (
-          <section key={suit} className="suit-section" style={{ ['--suit' as string]: `var(--${suit})` }}>
+          <section key={suit} className="suit-section" aria-labelledby={'h-' + suit}>
             <div className="suit-head">
               <SuitIcon suit={suit} />
               <div>
-                <h2>{SUIT_INFO[suit].label}</h2>
+                <h2 id={'h-' + suit}>{SUIT_INFO[suit].label}</h2>
                 <p>{SUIT_INFO[suit].desc}</p>
               </div>
             </div>
-            {games.map((g) => (
-              <button key={g.id} className={'game-row' + (g.playable ? '' : ' is-soon')} onClick={() => go('juego/' + g.id)}>
-                <span className="pip" />
-                <span className="body">
-                  <span className="name">{g.name}</span>
-                  <span className="short" style={{ display: 'block' }}>{g.short}</span>
-                </span>
-                {g.playable ? <span className="chev"><IconChevron /></span> : <span className="soon">Próximamente</span>}
-              </button>
-            ))}
+            <ul className="game-list">
+              {games.map((g) => (
+                <li key={g.id}>
+                  <button className="game-row" onClick={() => go('juego/' + g.id)}>
+                    <span className="body">
+                      <span className="name">{g.name}</span>
+                      <span className="short">{g.short}</span>
+                      {g.unconfirmed && (
+                        <span className="unconfirmed-tag"><IconWarn />Reglas sin confirmar</span>
+                      )}
+                    </span>
+                    <span className="chev"><IconChevron /></span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </section>
         )
       })}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { IconWarn } from '../components/Icons'
 import { Actions, TopBar } from '../components/Layout'
 import { SuitIcon } from '../components/Suit'
 import { gameById } from '../games/registry'
@@ -40,7 +41,15 @@ export function GameDetail({ id }: { id: string }) {
         </div>
         <div className="needs"><span>Necesitan:</span><strong>{game.needs}</strong></div>
 
-        {game.rules && (
+        {game.unconfirmed && (
+          <aside className="unconfirmed" aria-label="Reglas sin confirmar">
+            <h3><IconWarn />Reglas sin confirmar</h3>
+            <p>{game.unconfirmed}</p>
+            <p>{game.edit ? 'Si lo juegan distinto, cambialas en el editor.' : 'Si lo juegan distinto, sigan su versión: la app es una guía.'}</p>
+          </aside>
+        )}
+
+        {game.rules.length > 0 && (
           <div className="block">
             <h3>Cómo se juega</h3>
             <ol className="steps">
@@ -82,12 +91,8 @@ export function GameDetail({ id }: { id: string }) {
           </button>
         )}
 
-        {!game.playable && (
-          <p className="hint">Todavía no se puede jugar desde la app. Entra en la próxima tanda de juegos.</p>
-        )}
       </div>
-      {game.playable && (
-        <Actions>
+      <Actions>
           {missing > 0 ? (
             <button className="btn" onClick={() => go('jugadores')}>
               {players.length === 0 ? `Cargá al menos ${game.minPlayers} jugadores` : `Faltan ${missing} ${missing === 1 ? 'jugador' : 'jugadores'}`}
@@ -95,8 +100,7 @@ export function GameDetail({ id }: { id: string }) {
           ) : (
             <button className="btn" onClick={() => go('jugar/' + game.id)}>Jugar</button>
           )}
-        </Actions>
-      )}
+      </Actions>
     </div>
   )
 }

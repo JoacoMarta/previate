@@ -16,7 +16,7 @@ const yoTomo: CardRule = { title: 'Yo tomo', text: 'Tomás {2} vos.' }
 const piso: CardRule = { title: 'Piso', text: 'Todos tocan el piso. El último toma {1}.' }
 const pulgar: CardRule = {
   title: 'Pulgar',
-  text: 'Sos el dueño del pulgar: cuando quieras, apoyalo disimulado en la mesa. Los demás tienen que hacer lo mismo y el último toma {1}. Dura hasta que salga otro 5.',
+  text: 'El pulgar es tuyo: cuando quieras, apoyalo disimulado en la mesa. Los demás tienen que hacer lo mismo y el último toma {1}. Dura hasta que salga otro 5.',
 }
 const cielo: CardRule = { title: 'Cielo', text: 'Todos levantan la mano. El último toma {1}.' }
 const companero: CardRule = {

@@ -31,3 +31,19 @@ export const IconGear = () => (
 export const IconChevron = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path {...P} d="M9 5l7 7-7 7" /></svg>
 )
+export const IconPlus = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path {...P} d="M12 5v14M5 12h14" /></svg>
+)
+export const IconSliders = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path {...P} d="M4 7h10M18 7h2M4 17h4M12 17h8" />
+    <circle {...P} cx="16" cy="7" r="2" />
+    <circle {...P} cx="10" cy="17" r="2" />
+  </svg>
+)
+export const IconWarn = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path {...P} d="M12 3.5l9.5 16.5h-19z" />
+    <path {...P} d="M12 10v4.5M12 17.4v.1" />
+  </svg>
+)

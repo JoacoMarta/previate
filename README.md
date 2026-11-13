@@ -1,4 +1,4 @@
-# Previate
+# Fondo Blanco
 
 Juegos de previa de Uruguay y Argentina para jugar con un solo celular. Es una web app instalable (PWA): funciona sin internet una vez instalada, en iPhone y Android.
 

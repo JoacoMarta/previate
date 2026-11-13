@@ -17,9 +17,8 @@ export function PassPhone({ name, note, children, doneLabel = 'Listo, ocultar', 
     return (
       <>
         <div className="pass">
-          <p className="to">Pasale el celular a</p>
           <p className="who">{name}</p>
-          {note && <p className="note">{note}</p>}
+          <p className="note">Pasale el celular a {name}.{note ? ` ${note}` : ''}</p>
         </div>
         <Actions>
           <button className="btn" onClick={() => setShown(true)}>Soy {name}, mostrar</button>

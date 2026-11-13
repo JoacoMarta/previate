@@ -66,8 +66,8 @@ export function Bomba({ game }: { game: GameMeta }) {
           </>
         ) : (
           <>
-            <p className="to" style={{ color: 'var(--muted)', margin: 0 }}>Digan…</p>
             <p className="cat">{cat}</p>
+            <p className="letter" style={{ marginTop: -6 }}>Digan una cada uno y pasen el celular.</p>
             {withLetter && <p className="letter">que empiecen con <strong>{letter}</strong></p>}
             {phase === 'ticking' ? (
               <div className="fuse" style={{ ['--beat' as string]: `${beat}ms` }} aria-label="La bomba está encendida"><i /></div>

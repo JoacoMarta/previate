@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { Actions, TopBar } from '../components/Layout'
 import { Naipe, promptClass } from '../components/Naipe'
 import { shuffle } from '../lib/random'
@@ -14,7 +14,7 @@ export function PhraseGame({ game, listId, defaults, levels, render, reminder }:
   listId: string
   defaults: Phrase[]
   levels: Level[]
-  render: (text: string) => string
+  render: (text: string) => ReactNode
   reminder: string
 }) {
   useWakeLock()
@@ -55,7 +55,10 @@ export function PhraseGame({ game, listId, defaults, levels, render, reminder }:
               dealKey={card.id + i}
               colorOverride={LEVEL_COLOR[card.level]}
             >
-              <p className={promptClass(card.text)}>{render(card.text)}</p>
+              {(() => {
+                const body = render(card.text)
+                return typeof body === 'string' ? <p className={promptClass(body)}>{body}</p> : body
+              })()}
               <p className="sub">{fill(reminder, [], store.drinks)}</p>
             </Naipe>
           </>

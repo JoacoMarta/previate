@@ -128,10 +128,9 @@ export function Impostor({ game }: { game: GameMeta }) {
       <div className="app-inner" style={style}>
         <TopBar title={game.name} close />
         <div className="pass">
-          <p className="to">Arranca</p>
           <p className="who">{round.starter}</p>
           <p className="note">
-            En ronda, cada uno dice una sola palabra relacionada. Después de una o dos vueltas, a la cuenta de tres señalen a quien creen que es
+            Arranca {round.starter}. En ronda, cada uno dice una sola palabra relacionada. Después de una o dos vueltas, a la cuenta de tres señalen a quien creen que es
             {round.impostors.length > 1 ? ' uno de los impostores' : ' el impostor'}.
           </p>
         </div>

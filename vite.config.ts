@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png', 'icon.svg'],
       manifest: {
-        name: 'Previate',
-        short_name: 'Previate',
+        name: 'Fondo Blanco',
+        short_name: 'Fondo Blanco',
         description: 'Juegos de previa en un solo celular',
         lang: 'es',
         theme_color: '#241915',

@@ -75,3 +75,47 @@ export function buzz(ms: number | number[]) {
     // iPhone no vibra desde la web
   }
 }
+
+/** Golpe de bombo corto, para el ritmo que se acelera. */
+export function kick(accent = false) {
+  const a = ac()
+  if (!a) return
+  const o = a.createOscillator()
+  const g = a.createGain()
+  o.frequency.setValueAtTime(accent ? 160 : 130, a.currentTime)
+  o.frequency.exponentialRampToValueAtTime(45, a.currentTime + 0.12)
+  g.gain.setValueAtTime(accent ? 0.9 : 0.6, a.currentTime)
+  g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + 0.16)
+  o.connect(g).connect(a.destination)
+  o.start()
+  o.stop(a.currentTime + 0.18)
+  if (accent) {
+    const h = a.createOscillator()
+    const hg = a.createGain()
+    h.type = 'triangle'
+    h.frequency.value = 2400
+    hg.gain.setValueAtTime(0.05, a.currentTime)
+    hg.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + 0.05)
+    h.connect(hg).connect(a.destination)
+    h.start()
+    h.stop(a.currentTime + 0.06)
+  }
+}
+
+/** Alarma de tres pitidos (reloj de tragos, medusa). */
+export function alarm() {
+  const a = ac()
+  if (!a) return
+  ;[0, 0.22, 0.44].forEach((t) => {
+    const o = a.createOscillator()
+    const g = a.createGain()
+    o.type = 'square'
+    o.frequency.value = 988
+    g.gain.setValueAtTime(0.0001, a.currentTime + t)
+    g.gain.exponentialRampToValueAtTime(0.15, a.currentTime + t + 0.01)
+    g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + t + 0.16)
+    o.connect(g).connect(a.destination)
+    o.start(a.currentTime + t)
+    o.stop(a.currentTime + t + 0.18)
+  })
+}
